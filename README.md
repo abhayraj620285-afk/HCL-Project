@@ -833,3 +833,4 @@ npm run build
 | **[Operator Registry](frontend/src/app/components/users/users.component.ts)** | `/users` | Superadmin console for approving operator registrations, reassigning roles, and managing credentials. |
 | **[Navigation Shell](frontend/src/app/components/shell/shell.component.ts)** | *Layout* | Minimalist 76px icon dock sidebar with operator identity pill and theme toggle. |
 | **[Shared Components](frontend/src/app/shared/)** | *Modular* | Reusable `ConfirmModalComponent`, `PaginationComponent`, and `StatusBadgeComponent` across all views. |
+# HCL-Project
