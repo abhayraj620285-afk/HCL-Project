@@ -1,16 +1,13 @@
 <div class="landing-page">
-  <!-- =========================================================================
-       1. Translucent Frosted Navbar (Clean, Light Mode Alabaster & Deep Red)
-       ========================================================================= -->
+  <!-- Navbar -->
   <header class="landing-header">
     <div class="nav-container">
       <a routerLink="/" class="nav-brand" aria-label="RIMS Home">
         <img src="/rims-mark.svg" class="brand-logo" alt="" />
         <span class="brand-title">RIMS</span>
-        <span class="brand-badge">ENTERPRISE</span>
+        <span class="brand-badge">Enterprise</span>
       </a>
 
-      <!-- Clean Navigation Links -->
       <nav *ngIf="authService.isAuthenticated()" class="nav-links" aria-label="Main Navigation">
         <a routerLink="/dashboard" class="nav-link">Overview</a>
         <a routerLink="/inventory" class="nav-link">Inventory</a>
@@ -18,23 +15,14 @@
         <a routerLink="/customer-orders" class="nav-link">Orders</a>
       </nav>
 
-      <!-- Action Buttons -->
       <div class="nav-actions">
-        <a *ngIf="!authService.isAuthenticated()" routerLink="/login" class="nav-action-link">Sign In</a>
-        <a
-          *ngIf="!authService.isAuthenticated()"
-          routerLink="/register"
-          class="btn-primary-pill"
-        >
-          <span>Sign Up</span>
+        <a *ngIf="!authService.isAuthenticated()" routerLink="/login" class="nav-action-link">Sign in</a>
+        <a *ngIf="!authService.isAuthenticated()" routerLink="/register" class="btn-primary-pill">
+          <span>Sign up</span>
           <i class="ri-arrow-right-line" aria-hidden="true"></i>
         </a>
-        <a
-          *ngIf="authService.isAuthenticated()"
-          routerLink="/dashboard"
-          class="btn-primary-pill"
-        >
-          <span>Open Console</span>
+        <a *ngIf="authService.isAuthenticated()" routerLink="/dashboard" class="btn-primary-pill">
+          <span>Open console</span>
           <i class="ri-arrow-right-line" aria-hidden="true"></i>
         </a>
         <button
@@ -49,7 +37,7 @@
       </div>
     </div>
 
-    <!-- Mobile Drawer -->
+    <!-- Mobile drawer -->
     <div *ngIf="mobileNavOpen()" class="mobile-drawer" role="dialog" aria-modal="true">
       <nav class="mobile-drawer-nav">
         <ng-container *ngIf="authService.isAuthenticated()">
@@ -59,76 +47,68 @@
           <a routerLink="/customer-orders" (click)="closeMobileNav()" class="mobile-nav-link">Orders</a>
         </ng-container>
         <div class="mobile-drawer-footer">
-          <a
-            *ngIf="!authService.isAuthenticated()"
-            routerLink="/login"
-            (click)="closeMobileNav()"
-            class="mobile-btn-secondary"
-          >
-            Sign In
+          <a *ngIf="!authService.isAuthenticated()" routerLink="/login" (click)="closeMobileNav()" class="mobile-btn-secondary">
+            Sign in
           </a>
           <a
             [routerLink]="authService.isAuthenticated() ? '/dashboard' : '/register'"
             (click)="closeMobileNav()"
             class="mobile-btn-primary"
           >
-            {{ authService.isAuthenticated() ? 'Open Console' : 'Sign Up' }}
+            {{ authService.isAuthenticated() ? 'Open console' : 'Sign up' }}
           </a>
         </div>
       </nav>
     </div>
   </header>
 
-  <!-- =========================================================================
-       2. Hero Section (Geist Typography & Logistics Illustration)
-       ========================================================================= -->
+  <!-- Hero -->
   <main class="hero-section">
     <div class="hero-container">
-      <!-- Hero Left Column -->
       <div class="hero-copy">
         <div class="hero-eyebrow">
           <span class="pulse-indicator" aria-hidden="true"></span>
-          <span class="eyebrow-text">NEXT-GEN RETAIL LOGISTICS ARCHITECTURE</span>
+          <span class="eyebrow-text">Built for retail warehouse teams</span>
         </div>
 
         <div class="hero-heading-block">
-          <p class="hero-prefix">WE ARE</p>
+          <p class="hero-prefix">Retail Inventory Management System</p>
           <h1 class="hero-title">RIMS</h1>
-          <p class="hero-subtitle">PRECISION INVENTORY</p>
+          <p class="hero-subtitle">Know what is on every shelf.</p>
         </div>
 
         <p class="hero-description">
-          In the dynamic landscape of modern enterprise retail, orchestrating multi-node
-          warehouses and eliminating stock drift requires real-time telemetry, automated
-          replenishment triggers, and mathematical precision.
+          RIMS keeps stock, purchase orders and customer orders for all your
+          warehouses in one place, and warns you when a product runs low so you
+          can reorder in time.
         </p>
 
-        <!-- Interactive Dual Pill Button Group -->
-        <div class="hero-cta-group">
-          <a
-            [routerLink]="authService.isAuthenticated() ? '/dashboard' : '/login'"
-            class="dual-pill-button"
-            [attr.aria-label]="authService.isAuthenticated() ? 'Go to Dashboard' : 'Launch Console'"
-          >
-            <span class="dual-pill-action">{{ authService.isAuthenticated() ? 'GO TO DASHBOARD' : 'LAUNCH CONSOLE' }}</span>
-            <span class="dual-pill-icon" aria-hidden="true">
-              <i class="ri-arrow-right-up-line"></i>
-            </span>
-          </a>
-
-          <a
-            *ngIf="!authService.isAuthenticated()"
-            routerLink="/register"
-            class="btn-outline-explore"
-            title="Create an account"
-          >
-            <span>CREATE ACCOUNT</span>
-            <i class="ri-arrow-right-line" aria-hidden="true"></i>
-          </a>
-        </div>
+        <ul class="hero-features" aria-label="What RIMS does">
+          <li>
+            <span class="feature-icon" aria-hidden="true"><i class="ri-stack-line"></i></span>
+            <div>
+              <strong>Tracks stock in every warehouse</strong>
+              <span>Live quantities per product and location, with movement history.</span>
+            </div>
+          </li>
+          <li>
+            <span class="feature-icon" aria-hidden="true"><i class="ri-alarm-warning-line"></i></span>
+            <div>
+              <strong>Warns you before you run out</strong>
+              <span>Set reorder levels and see what needs attention.</span>
+            </div>
+          </li>
+          <li>
+            <span class="feature-icon" aria-hidden="true"><i class="ri-truck-line"></i></span>
+            <div>
+              <strong>Manages purchase and customer orders</strong>
+              <span>Follow supplier orders and record sales as they happen.</span>
+            </div>
+          </li>
+        </ul>
       </div>
 
-      <!-- Hero Right Column (Warehouse Analytics Illustration) -->
+      <!-- Illustration (unchanged) -->
       <div class="hero-visual-column">
         <div
           class="hero-art-viewport"
@@ -137,50 +117,123 @@
           role="region"
           aria-label="Interactive Warehouse Analytics Illustration"
         >
-          <!-- Independently drifting transparent pieces retain the supplied artwork. -->
           <div
             class="hero-art-stage"
             [style.transform]="'translate3d(' + tiltX() + 'px, ' + tiltY() + 'px, 0)'"
           >
-            <div class="hero-warehouse-illustration" role="img" aria-label="Warehouse analytics operator interacting with real-time dashboard, conveyor belt, and delivery drone">
-              <img src="/hero-motion/hero-part-01.png" alt="" aria-hidden="true" class="hero-art-layer" />
-              <img src="/hero-motion/hero-part-02.png" alt="" aria-hidden="true" class="hero-art-layer" />
-              <img src="/hero-motion/hero-part-03.png" alt="" aria-hidden="true" class="hero-art-layer" />
-              <img src="/hero-motion/hero-part-04.png" alt="" aria-hidden="true" class="hero-art-layer" />
-              <img src="/hero-motion/hero-part-05.png" alt="" aria-hidden="true" class="hero-art-layer" />
-              <img src="/hero-motion/hero-part-06.png" alt="" aria-hidden="true" class="hero-art-layer" />
-              <img src="/hero-motion/hero-part-07.png" alt="" aria-hidden="true" class="hero-art-layer" />
-              <img src="/hero-motion/hero-part-08.png" alt="" aria-hidden="true" class="hero-art-layer" />
-              <img src="/hero-motion/hero-part-09.png" alt="" aria-hidden="true" class="hero-art-layer" />
-              <img src="/hero-motion/hero-part-10.png" alt="" aria-hidden="true" class="hero-art-layer" />
-              <img src="/hero-motion/hero-part-11.png" alt="" aria-hidden="true" class="hero-art-layer" />
-              <img src="/hero-motion/hero-part-12.png" alt="" aria-hidden="true" class="hero-art-layer" />
-              <img src="/hero-motion/hero-part-13.png" alt="" aria-hidden="true" class="hero-art-layer" />
+            <div class="hero-warehouse-illustration" role="img" aria-label="Illustration of a warehouse shelf with a low-stock slot, a stock dashboard with a reorder alert, and a delivery package on its way">
+              <svg class="hero-svg" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <defs>
+                  <filter id="rimsCardShadow" x="-20%" y="-20%" width="140%" height="155%">
+                    <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#0B1F24" flood-opacity="0.16" />
+                  </filter>
+                </defs>
+
+                <!-- backdrop -->
+                <circle cx="240" cy="246" r="214" fill="#DCE9E5" />
+                <circle cx="240" cy="246" r="160" fill="#E8F1EE" />
+                <ellipse cx="238" cy="413" rx="196" ry="13" fill="#0B1F24" opacity="0.08" />
+
+                <!-- shelving unit -->
+                <g>
+                  <rect x="46" y="150" width="9" height="258" rx="3" fill="#0B6B68" />
+                  <rect x="250" y="150" width="9" height="258" rx="3" fill="#0B6B68" />
+                  <rect x="46" y="236" width="213" height="9" rx="3" fill="#08514F" />
+                  <rect x="46" y="317" width="213" height="9" rx="3" fill="#08514F" />
+                  <rect x="46" y="398" width="213" height="9" rx="3" fill="#08514F" />
+
+                  <!-- shelf 1 -->
+                  <rect x="60" y="186" width="46" height="50" rx="4" fill="#F2B134" />
+                  <rect x="76" y="186" width="14" height="14" fill="#D99A1E" />
+                  <rect x="114" y="200" width="58" height="36" rx="4" fill="#8CC2BC" />
+                  <rect x="136" y="200" width="14" height="12" fill="#6AA8A1" />
+                  <rect x="182" y="180" width="56" height="56" rx="4" fill="#F2B134" />
+                  <rect x="203" y="180" width="14" height="16" fill="#D99A1E" />
+
+                  <!-- shelf 2 -->
+                  <rect x="64" y="259" width="62" height="58" rx="4" fill="#8CC2BC" />
+                  <rect x="88" y="259" width="14" height="16" fill="#6AA8A1" />
+                  <rect x="134" y="283" width="44" height="34" rx="4" fill="#F2B134" />
+                  <rect x="149" y="283" width="14" height="12" fill="#D99A1E" />
+                  <rect x="188" y="271" width="50" height="46" rx="4" fill="#CFE5E1" />
+                  <rect x="206" y="271" width="14" height="14" fill="#AFD2CC" />
+
+                  <!-- shelf 3 with an empty, low-stock slot -->
+                  <rect x="62" y="358" width="50" height="40" rx="4" fill="#F2B134" />
+                  <rect x="123" y="353" width="60" height="45" rx="5" fill="#FDEBE5" stroke="#D2481F" stroke-width="2" stroke-dasharray="5 4" />
+                  <rect x="196" y="368" width="42" height="30" rx="4" fill="#8CC2BC" />
+                </g>
+
+                <!-- reorder path from the empty slot to the incoming package -->
+                <path d="M158 348 C 200 318, 282 322, 334 362" fill="none" stroke="#0B6B68" stroke-width="2.5" stroke-dasharray="2 7" stroke-linecap="round" />
+
+                <!-- dashboard card -->
+                <g class="art-float-a">
+                  <g transform="translate(232 96)">
+                    <rect width="216" height="214" rx="16" fill="#FBFDFC" stroke="#D3E0DC" filter="url(#rimsCardShadow)" />
+                    <circle cx="20" cy="20" r="4" fill="#D2481F" />
+                    <circle cx="32" cy="20" r="4" fill="#F2B134" />
+                    <circle cx="44" cy="20" r="4" fill="#0B6B68" />
+                    <rect x="16" y="40" width="82" height="9" rx="4.5" fill="#0B1F24" />
+                    <rect x="16" y="55" width="52" height="6" rx="3" fill="#C4D6D1" />
+                    <rect x="134" y="82" width="12" height="26" rx="3" fill="#0B6B68" />
+                    <rect x="152" y="68" width="12" height="40" rx="3" fill="#0B6B68" />
+                    <rect x="170" y="76" width="12" height="32" rx="3" fill="#0B6B68" />
+                    <rect x="188" y="52" width="12" height="56" rx="3" fill="#F2B134" />
+                    <rect x="16" y="120" width="184" height="1.5" fill="#E3ECE9" />
+
+                    <rect x="16" y="136" width="62" height="7" rx="3.5" fill="#0B1F24" />
+                    <rect x="94" y="137" width="76" height="6" rx="3" fill="#E3ECE9" />
+                    <rect x="94" y="137" width="14" height="6" rx="3" fill="#D2481F" />
+                    <rect x="180" y="130" width="20" height="18" rx="9" fill="#FDEBE5" />
+                    <text x="190" y="143.5" text-anchor="middle" font-family="Instrument Sans, system-ui, sans-serif" font-size="11" font-weight="700" fill="#B8340F">6</text>
+
+                    <rect x="16" y="162" width="54" height="7" rx="3.5" fill="#0B1F24" />
+                    <rect x="94" y="163" width="76" height="6" rx="3" fill="#E3ECE9" />
+                    <rect x="94" y="163" width="34" height="6" rx="3" fill="#F2B134" />
+
+                    <rect x="16" y="188" width="70" height="7" rx="3.5" fill="#0B1F24" />
+                    <rect x="94" y="189" width="76" height="6" rx="3" fill="#E3ECE9" />
+                    <rect x="94" y="189" width="62" height="6" rx="3" fill="#0B6B68" />
+                  </g>
+                </g>
+
+                <!-- alert badge -->
+                <g class="art-float-b">
+                  <circle cx="450" cy="92" r="21" fill="#F2B134" stroke="#E8F1EE" stroke-width="4" />
+                  <text x="450" y="100" text-anchor="middle" font-family="Bricolage Grotesque, system-ui, sans-serif" font-size="24" font-weight="700" fill="#0B1F24">!</text>
+                </g>
+
+                <!-- incoming package with confirmation -->
+                <g class="art-float-b art-delay" transform="translate(334 332)">
+                  <rect y="12" width="96" height="70" rx="7" fill="#F2B134" />
+                  <rect y="12" width="96" height="18" rx="7" fill="#E3A21F" />
+                  <rect x="38" y="12" width="20" height="70" fill="#D18F14" />
+                  <rect x="64" y="52" width="26" height="16" rx="3" fill="#FBFDFC" />
+                  <circle cx="90" cy="14" r="18" fill="#0B6B68" stroke="#E8F1EE" stroke-width="4" />
+                  <path d="M81 14 l6 6 l11 -12" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+
+                <!-- small accents -->
+                <circle cx="62" cy="112" r="6" fill="#F2B134" opacity="0.85" />
+                <circle cx="212" cy="64" r="4" fill="#0B6B68" opacity="0.7" />
+                <rect x="108" y="84" width="14" height="3.5" rx="1.75" fill="#0B6B68" opacity="0.6" />
+                <rect x="113.25" y="78.75" width="3.5" height="14" rx="1.75" fill="#0B6B68" opacity="0.6" />
+              </svg>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Hero Bottom Bar (Symmetrical Protocol & SLA Bar - Single Viewport) -->
     <div class="hero-bottom-bar">
       <div class="bottom-bar-container">
-        <!-- Core product capabilities -->
         <div class="protocol-badges">
-          <span class="protocol-item">
-            <i class="ri-stack-line" aria-hidden="true"></i>
-            <span>STOCK TRACKING</span>
-          </span>
-          <span class="protocol-divider">/</span>
-          <span class="protocol-item">
-            <i class="ri-building-2-line" aria-hidden="true"></i>
-            <span>WAREHOUSE OPERATIONS</span>
-          </span>
-          <span class="protocol-divider">/</span>
-          <span class="protocol-item">
-            <i class="ri-file-list-3-line" aria-hidden="true"></i>
-            <span>PURCHASE ORDER MANAGEMENT</span>
-          </span>
+          <span class="protocol-item"><i class="ri-arrow-left-right-line" aria-hidden="true"></i><span>Stock movement history</span></span>
+          <span class="protocol-divider" aria-hidden="true">/</span>
+          <span class="protocol-item"><i class="ri-team-line" aria-hidden="true"></i><span>Supplier records</span></span>
+          <span class="protocol-divider" aria-hidden="true">/</span>
+          <span class="protocol-item"><i class="ri-shield-user-line" aria-hidden="true"></i><span>Role-based access</span></span>
         </div>
       </div>
     </div>

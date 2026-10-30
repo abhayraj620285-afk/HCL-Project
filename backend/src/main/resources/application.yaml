@@ -17,7 +17,7 @@ spring:
       ddl-auto: update
 
 jwt:
-  secret: ${JWT_SECRET}
+  secret: ${JWT_SECRET:"/xi6+5vACgIfDTgXOOVLgYGzna5UHeTwJv6uHsmFEZy7i9tLcVbSu7etLR1wlj61"}
   expiration-ms: 86400000
 
 app:
