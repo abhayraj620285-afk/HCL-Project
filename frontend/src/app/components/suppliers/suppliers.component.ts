@@ -15,17 +15,17 @@ import { Supplier } from '../../models/inventory.models';
       <!-- Header -->
       <div class="page-header">
         <div>
-          <div class="technical-label">PROCUREMENT VENDOR NETWORK</div>
-          <h1 class="page-title">Registered Suppliers & Lead Times</h1>
+          <h1 class="page-title">Suppliers</h1>
+          <p class="page-sub">Vendors you order from and how long they take to deliver.</p>
         </div>
         <div class="header-actions">
           <button class="btn btn-secondary btn-sm" (click)="loadSuppliers()" [disabled]="loading()">
             <i class="ri-refresh-line" [class.ri-spin]="loading()"></i>
-            <span>SYNC</span>
+            <span>Refresh</span>
           </button>
           <button *ngIf="authService.isWarehouseManager()" class="btn btn-primary btn-sm" (click)="openCreateModal()">
             <i class="ri-add-line"></i>
-            <span>REGISTER NEW SUPPLIER</span>
+            <span>Add supplier</span>
           </button>
         </div>
       </div>
@@ -36,11 +36,11 @@ import { Supplier } from '../../models/inventory.models';
           <thead>
             <tr>
               <th>ID</th>
-              <th>SUPPLIER / VENDOR NAME</th>
-              <th>CONTACT EMAIL</th>
-              <th>PHONE</th>
-              <th>AVERAGE LEAD TIME</th>
-              <th style="text-align: right;">OPERATIONS</th>
+              <th>Supplier</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Lead time</th>
+              <th style="text-align: right;">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -61,7 +61,7 @@ import { Supplier } from '../../models/inventory.models';
               <td class="mono">{{ s.phone }}</td>
               <td>
                 <span class="badge badge-neutral">
-                  <i class="ri-time-line"></i> {{ s.leadTimeDays }} Days
+                  <i class="ri-time-line"></i> {{ s.leadTimeDays }} days
                 </span>
               </td>
               <td style="text-align: right;">
@@ -72,7 +72,7 @@ import { Supplier } from '../../models/inventory.models';
                     (click)="openEditModal(s)"
                     title="Edit Supplier"
                   >
-                    <i class="ri-edit-line"></i> EDIT
+                    <i class="ri-edit-line"></i> Edit
                   </button>
                   <button
                     *ngIf="authService.isAdmin()"
@@ -94,8 +94,7 @@ import { Supplier } from '../../models/inventory.models';
         <div class="modal-dialog">
           <div class="modal-header">
             <div>
-              <div class="technical-label">{{ isEditing ? 'UPDATE VENDOR RECORD' : 'VENDOR ONBOARDING' }}</div>
-              <div class="section-title">{{ isEditing ? 'Edit: ' + supplierForm.name : 'Register Supplier' }}</div>
+              <div class="section-title">{{ isEditing ? 'Edit ' + supplierForm.name : 'Add supplier' }}</div>
             </div>
             <button class="btn btn-ghost btn-sm" (click)="showModal = false">
               <i class="ri-close-line"></i>
@@ -103,7 +102,7 @@ import { Supplier } from '../../models/inventory.models';
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label class="form-label">SUPPLIER / COMPANY NAME</label>
+              <label class="form-label">Name</label>
               <input
                 type="text"
                 class="form-control"
@@ -114,7 +113,7 @@ import { Supplier } from '../../models/inventory.models';
             </div>
 
             <div class="form-group">
-              <label class="form-label">CONTACT EMAIL ADDRESS</label>
+              <label class="form-label">Email</label>
               <input
                 type="email"
                 class="form-control"
@@ -125,7 +124,7 @@ import { Supplier } from '../../models/inventory.models';
             </div>
 
             <div class="form-group">
-              <label class="form-label">PHONE NUMBER</label>
+              <label class="form-label">Phone</label>
               <input
                 type="text"
                 class="form-control input-mono"
@@ -136,7 +135,7 @@ import { Supplier } from '../../models/inventory.models';
             </div>
 
             <div class="form-group">
-              <label class="form-label">AVERAGE LEAD TIME (CALENDAR DAYS)</label>
+              <label class="form-label">Lead time (days)</label>
               <input
                 type="number"
                 class="form-control input-mono"
@@ -148,13 +147,13 @@ import { Supplier } from '../../models/inventory.models';
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-outline" (click)="showModal = false">CANCEL</button>
+            <button class="btn btn-outline" (click)="showModal = false">Cancel</button>
             <button
               class="btn btn-primary"
               (click)="saveSupplier()"
               [disabled]="!supplierForm.name || !supplierForm.contactEmail || supplierForm.leadTimeDays <= 0"
             >
-              {{ isEditing ? 'UPDATE SUPPLIER' : 'REGISTER SUPPLIER' }}
+              {{ isEditing ? 'Save changes' : 'Add supplier' }}
             </button>
           </div>
         </div>

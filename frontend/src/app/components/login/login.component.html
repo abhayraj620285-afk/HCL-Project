@@ -4,7 +4,7 @@
     <a routerLink="/" class="auth-brand-badge" aria-label="Return to RIMS Home">
       <img src="/rims-mark.svg" alt="" class="brand-badge-logo" />
       <span class="brand-badge-title">RIMS</span>
-      <span class="brand-badge-tag">ENTERPRISE</span>
+      <span class="brand-badge-tag">Enterprise</span>
     </a>
     <a routerLink="/landing" class="back-home-link" aria-label="Go to RIMS Platform Landing">
       <i class="ri-arrow-left-line" aria-hidden="true"></i>
@@ -18,7 +18,7 @@
       class="auth-card-container"
       [class.right-panel-active]="isSignUpActive()"
       role="region"
-      aria-label="Operator Authentication"
+      aria-label="Account sign in and sign up"
     >
       <!-- SIGN UP FORM (Revealed on the Right when right-panel-active) -->
       <div
@@ -26,9 +26,9 @@
         [attr.aria-hidden]="!isSignUpActive()"
       >
         <form (ngSubmit)="onRegister()" class="auth-form" autocomplete="on">
-          <h1 class="form-title">Create Account</h1>
+          <h1 class="form-title">Create account</h1>
 
-          <p class="form-instruction">Register as a new operator to access your workspace</p>
+          <p class="form-instruction">Create an account to get started. A superadmin approves new accounts before they can use the workspace.</p>
 
           <!-- Username -->
           <div class="input-field">
@@ -98,12 +98,12 @@
             [tabindex]="isSignUpActive() ? 0 : -1"
           >
             <i class="ri-loader-4-line ri-spin" *ngIf="loading()" aria-hidden="true"></i>
-            <span>{{ loading() ? 'Creating account…' : 'Sign Up' }}</span>
+            <span>{{ loading() ? 'Creating account…' : 'Sign up' }}</span>
           </button>
 
           <!-- Mobile Alternate Switch -->
           <div class="mobile-switch">
-            <span>Already registered?</span>
+            <span>Already have an account?</span>
             <button type="button" class="switch-inline-link" (click)="switchToSignIn()">
               Sign in
             </button>
@@ -117,9 +117,9 @@
         [attr.aria-hidden]="isSignUpActive()"
       >
         <form (ngSubmit)="onLogin()" class="auth-form" autocomplete="on">
-          <h1 class="form-title">Sign In</h1>
+          <h1 class="form-title">Sign in</h1>
 
-          <p class="form-instruction">Enter your operator credentials to access your workspace</p>
+          <p class="form-instruction">Sign in to your RIMS workspace.</p>
 
           <!-- Username -->
           <div class="input-field">
@@ -132,7 +132,7 @@
               name="username"
               autocomplete="username"
               spellcheck="false"
-              placeholder="Username or operator ID"
+              placeholder="Username"
               [tabindex]="!isSignUpActive() ? 0 : -1"
               required
             />
@@ -171,7 +171,7 @@
               (click)="onForgotPassword($event)"
               [tabindex]="!isSignUpActive() ? 0 : -1"
             >
-              Forget Password?
+              Forgot password?
             </button>
           </div>
 
@@ -182,13 +182,13 @@
             [tabindex]="!isSignUpActive() ? 0 : -1"
           >
             <i class="ri-loader-4-line ri-spin" *ngIf="loading()" aria-hidden="true"></i>
-            <span>{{ loading() ? 'Signing in…' : 'Sign In' }}</span>
+            <span>{{ loading() ? 'Signing in…' : 'Sign in' }}</span>
           </button>
 
           <!-- Hidden router link for fallback compatibility -->
           <div class="auth-switch visually-hidden">
             <span>Don't have an account?</span>
-            <a routerLink="/register" class="auth-link">Sign up / Register</a>
+            <a routerLink="/login" [queryParams]="{ mode: 'signup' }" class="auth-link">Sign up / Register</a>
           </div>
 
           <!-- Mobile Alternate Switch -->
@@ -219,9 +219,9 @@
               <div class="art-floor-shadow"></div>
             </div>
 
-            <h2 class="overlay-title">Welcome to RIMS</h2>
+            <h2 class="overlay-title">Welcome back</h2>
             <p class="overlay-desc">
-              To keep connected with your inventory operations and multi-node warehouse mesh, please sign in with your operator ID.
+              Sign in to see your stock levels, orders and low-stock warnings.
             </p>
             <button
               type="button"
@@ -229,7 +229,7 @@
               (click)="switchToSignIn()"
               aria-label="Switch to Sign In"
             >
-              SIGN IN
+              Sign in
             </button>
           </div>
 
@@ -254,7 +254,7 @@
 
             <h2 class="overlay-title">New to RIMS?</h2>
             <p class="overlay-desc">
-              Sign up now and experience zero-drift stock control, smart reorder triggers, and enterprise logistics accuracy.
+              Create an account to track stock across your warehouses and get warned before products run out.
             </p>
             <button
               type="button"
@@ -262,7 +262,7 @@
               (click)="switchToSignUp()"
               aria-label="Switch to Sign Up"
             >
-              SIGN UP
+              Sign up
             </button>
           </div>
         </div>
@@ -272,19 +272,6 @@
 
   <!-- Security & Trust Footer -->
   <footer class="auth-footer">
-    <div class="footer-item">
-      <i class="ri-shield-check-line" aria-hidden="true"></i>
-      <span>SOC2 Type II Certified</span>
-    </div>
-    <span class="footer-divider">•</span>
-    <div class="footer-item">
-      <i class="ri-lock-line" aria-hidden="true"></i>
-      <span>256-bit TLS Encryption</span>
-    </div>
-    <span class="footer-divider">•</span>
-    <div class="footer-item">
-      <i class="ri-database-2-line" aria-hidden="true"></i>
-      <span>PostgreSQL 18 Multi-AZ Mesh</span>
-    </div>
+    <span>RIMS · HCLTech</span>
   </footer>
 </div>

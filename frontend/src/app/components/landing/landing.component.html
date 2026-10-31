@@ -17,7 +17,7 @@
 
       <div class="nav-actions">
         <a *ngIf="!authService.isAuthenticated()" routerLink="/login" class="nav-action-link">Sign in</a>
-        <a *ngIf="!authService.isAuthenticated()" routerLink="/register" class="btn-primary-pill">
+        <a *ngIf="!authService.isAuthenticated()" routerLink="/login" [queryParams]="{ mode: 'signup' }" class="btn-primary-pill">
           <span>Sign up</span>
           <i class="ri-arrow-right-line" aria-hidden="true"></i>
         </a>
@@ -51,7 +51,8 @@
             Sign in
           </a>
           <a
-            [routerLink]="authService.isAuthenticated() ? '/dashboard' : '/register'"
+            [routerLink]="authService.isAuthenticated() ? '/dashboard' : '/login'"
+            [queryParams]="authService.isAuthenticated() ? null : { mode: 'signup' }"
             (click)="closeMobileNav()"
             class="mobile-btn-primary"
           >

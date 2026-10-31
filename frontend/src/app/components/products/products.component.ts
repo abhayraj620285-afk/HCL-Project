@@ -18,21 +18,21 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
       <!-- Page Header -->
       <div class="page-header">
         <div>
-          <div class="technical-label">MASTER PRODUCT CATALOG</div>
-          <h1 class="page-title">Catalog & Category Management</h1>
+          <h1 class="page-title">Products</h1>
+          <p class="page-sub">Your product catalog and categories.</p>
         </div>
         <div class="header-actions">
           <button class="btn btn-secondary btn-sm" (click)="loadData()" [disabled]="loading()">
             <i class="ri-refresh-line" [class.ri-spin]="loading()"></i>
-            <span>SYNC</span>
+            <span>Refresh</span>
           </button>
           <button *ngIf="authService.isWarehouseManager()" class="btn btn-secondary btn-sm" (click)="showCategoryDrawer = true">
             <i class="ri-folder-settings-line"></i>
-            <span>MANAGE CATEGORIES ({{ categories().length }})</span>
+            <span>Categories ({{ categories().length }})</span>
           </button>
           <button *ngIf="authService.isWarehouseManager()" class="btn btn-primary btn-sm" (click)="openCreateModal()">
             <i class="ri-add-line"></i>
-            <span>REGISTER NEW PRODUCT</span>
+            <span>Add product</span>
           </button>
         </div>
       </div>
@@ -47,12 +47,12 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
               class="form-control input-mono"
               [ngModel]="searchQuery"
               (ngModelChange)="onSearchChange($event)"
-              placeholder="Search catalog by SKU or title..."
+              placeholder="Search by name or SKU"
             />
           </div>
           <div class="category-filter-box">
             <select class="form-select" [(ngModel)]="selectedCategoryId" (ngModelChange)="onCategoryChange()">
-              <option [ngValue]="null">ALL CATEGORIES</option>
+              <option [ngValue]="null">All categories</option>
               <option *ngFor="let c of categories()" [ngValue]="c.id">{{ c.name }}</option>
             </select>
           </div>
@@ -66,11 +66,11 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
             <tr>
               <th>ID</th>
               <th>SKU</th>
-              <th>PRODUCT NAME</th>
-              <th>CATEGORY</th>
-              <th>UNIT PRICE</th>
-              <th>REORDER THRESHOLD</th>
-              <th style="text-align: right;">OPERATIONS</th>
+              <th>Product</th>
+              <th>Category</th>
+              <th>Unit price</th>
+              <th>Reorder level</th>
+              <th style="text-align: right;">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -103,7 +103,7 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
                     (click)="openEditModal(p)"
                     title="Edit product"
                   >
-                    <i class="ri-edit-line"></i> EDIT
+                    <i class="ri-edit-line"></i> Edit
                   </button>
                   <button
                     *ngIf="authService.isAdmin()"
@@ -131,8 +131,7 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
         <div class="modal-dialog">
           <div class="modal-header">
             <div>
-              <div class="technical-label">{{ isEditing ? 'UPDATE MASTER RECORD' : 'CATALOG REGISTRATION' }}</div>
-              <div class="section-title">{{ isEditing ? 'Edit Product: ' + productForm.name : 'Create New Product' }}</div>
+              <div class="section-title">{{ isEditing ? 'Edit ' + productForm.name : 'Add product' }}</div>
             </div>
             <button class="btn btn-ghost btn-sm" (click)="showProductModal = false">
               <i class="ri-close-line"></i>
@@ -140,7 +139,7 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label class="form-label">PRODUCT TITLE / NAME</label>
+              <label class="form-label">Name</label>
               <input
                 type="text"
                 class="form-control"
@@ -151,7 +150,7 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
             </div>
 
             <div class="form-group">
-              <label class="form-label">SKU (STOCK KEEPING UNIT)</label>
+              <label class="form-label">SKU</label>
               <input
                 type="text"
                 class="form-control input-mono"
@@ -163,7 +162,7 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
 
             <div class="form-row-2">
               <div class="form-group">
-                <label class="form-label">UNIT PRICE ($ USD)</label>
+                <label class="form-label">Unit price ($)</label>
                 <input
                   type="number"
                   class="form-control input-mono"
@@ -176,7 +175,7 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
               </div>
 
               <div class="form-group">
-                <label class="form-label">REORDER LEVEL (UNITS)</label>
+                <label class="form-label">Reorder level (units)</label>
                 <input
                   type="number"
                   class="form-control input-mono"
@@ -189,21 +188,21 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
             </div>
 
             <div class="form-group">
-              <label class="form-label">PRODUCT CATEGORY</label>
+              <label class="form-label">Category</label>
               <select class="form-select" [(ngModel)]="productForm.categoryId">
-                <option [ngValue]="null">-- Select Category --</option>
+                <option [ngValue]="null">Select a category</option>
                 <option *ngFor="let c of categories()" [ngValue]="c.id">{{ c.name }}</option>
               </select>
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-outline" (click)="showProductModal = false">CANCEL</button>
+            <button class="btn btn-outline" (click)="showProductModal = false">Cancel</button>
             <button
               class="btn btn-primary"
               (click)="saveProduct()"
               [disabled]="!productForm.name || !productForm.sku || productForm.price < 0"
             >
-              {{ isEditing ? 'UPDATE PRODUCT' : 'CREATE PRODUCT' }}
+              {{ isEditing ? 'Save changes' : 'Add product' }}
             </button>
           </div>
         </div>
@@ -214,8 +213,7 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
         <div class="modal-dialog">
           <div class="modal-header">
             <div>
-              <div class="technical-label">CATEGORY TAXONOMY</div>
-              <div class="section-title">Manage Product Categories</div>
+              <div class="section-title">Categories</div>
             </div>
             <button class="btn btn-ghost btn-sm" (click)="showCategoryDrawer = false">
               <i class="ri-close-line"></i>
@@ -228,14 +226,14 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
                 type="text"
                 class="form-control"
                 [(ngModel)]="newCategoryName"
-                placeholder="New category name (e.g. Hardware, Peripherals)..."
+                placeholder="New category name"
               />
               <button
                 class="btn btn-primary"
                 (click)="createCategory()"
                 [disabled]="!newCategoryName.trim()"
               >
-                <i class="ri-add-line"></i> ADD
+                <i class="ri-add-line"></i> Add
               </button>
             </div>
 
@@ -257,7 +255,7 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" (click)="showCategoryDrawer = false">DONE</button>
+            <button class="btn btn-secondary" (click)="showCategoryDrawer = false">Done</button>
           </div>
         </div>
       </div>

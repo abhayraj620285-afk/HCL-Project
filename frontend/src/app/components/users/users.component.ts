@@ -14,17 +14,17 @@ import { AssignableUserRole, User } from '../../models/inventory.models';
       <!-- Header -->
       <div class="page-header">
         <div>
-          <div class="technical-label">SECURITY & ACCESS CONTROL</div>
-          <h1 class="page-title">Operator Directory & Role Permissions</h1>
+          <h1 class="page-title">Users</h1>
+          <p class="page-sub">Manage who can sign in and what they can do.</p>
         </div>
         <div class="header-actions">
           <button class="btn btn-secondary btn-sm" (click)="loadUsers()" [disabled]="loading()">
             <i class="ri-refresh-line" [class.ri-spin]="loading()"></i>
-            <span>SYNC</span>
+            <span>Refresh</span>
           </button>
           <button class="btn btn-primary btn-sm" (click)="openCreateModal()">
             <i class="ri-user-add-line"></i>
-            <span>CREATE USER</span>
+            <span>Add user</span>
           </button>
         </div>
       </div>
@@ -34,12 +34,12 @@ import { AssignableUserRole, User } from '../../models/inventory.models';
         <table class="data-table">
           <thead>
             <tr>
-              <th>OPERATOR ID</th>
-              <th>USERNAME</th>
-              <th>CORPORATE EMAIL</th>
-              <th>ACCESS ROLE</th>
-              <th>APPROVAL</th>
-              <th style="text-align: right;">OPERATIONS</th>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Approval</th>
+              <th style="text-align: right;">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -62,12 +62,12 @@ import { AssignableUserRole, User } from '../../models/inventory.models';
                   }"
                 >
                   <span class="badge-dot"></span>
-                  {{ u.role }}
+                  {{ (u.role || '').replace('_', ' ') | titlecase }}
                 </span>
               </td>
               <td>
                 <span class="badge" [ngClass]="u.approved ? 'badge-success' : 'badge-warning'">
-                  {{ u.approved ? 'APPROVED' : 'AWAITING APPROVAL' }}
+                  {{ u.approved ? 'Approved' : 'Awaiting approval' }}
                 </span>
               </td>
               <td style="text-align: right;">
@@ -76,15 +76,15 @@ import { AssignableUserRole, User } from '../../models/inventory.models';
                     *ngIf="u.role !== 'SUPER_ADMIN'"
                     class="btn btn-secondary btn-sm"
                     (click)="setApproval(u, !u.approved)"
-                  >{{ u.approved ? 'REVOKE' : 'APPROVE' }}</button>
-                  <button *ngIf="u.role !== 'SUPER_ADMIN'" class="btn btn-secondary btn-sm" (click)="openEditModal(u)" title="Modify Permissions">
-                    <i class="ri-edit-line"></i> EDIT
+                  >{{ u.approved ? 'Revoke' : 'Approve' }}</button>
+                  <button *ngIf="u.role !== 'SUPER_ADMIN'" class="btn btn-secondary btn-sm" (click)="openEditModal(u)" title="Change role">
+                    <i class="ri-edit-line"></i> Edit
                   </button>
                   <button
                     class="btn btn-danger btn-sm"
                     *ngIf="u.role !== 'SUPER_ADMIN'"
                     (click)="deleteUser(u)"
-                    title="Revoke & Delete Access"
+                    title="Delete user"
                   >
                     <i class="ri-delete-bin-line"></i>
                   </button>
@@ -100,8 +100,7 @@ import { AssignableUserRole, User } from '../../models/inventory.models';
         <div class="modal-dialog">
           <div class="modal-header">
             <div>
-              <div class="technical-label">{{ isCreating ? 'IDENTITY PROVISIONING' : 'ACCESS PERMISSIONS' }}</div>
-              <div class="section-title">{{ isCreating ? 'Create user' : 'Assign role: ' + userForm.username }}</div>
+              <div class="section-title">{{ isCreating ? 'Add user' : 'Change role: ' + userForm.username }}</div>
             </div>
             <button class="btn btn-ghost btn-sm" (click)="showModal = false">
               <i class="ri-close-line"></i>
@@ -109,7 +108,7 @@ import { AssignableUserRole, User } from '../../models/inventory.models';
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label class="form-label">OPERATOR USERNAME</label>
+              <label class="form-label">Username</label>
               <input
                 type="text"
                 class="form-control input-mono"
@@ -120,7 +119,7 @@ import { AssignableUserRole, User } from '../../models/inventory.models';
             </div>
 
             <div class="form-group">
-              <label class="form-label">CORPORATE EMAIL</label>
+              <label class="form-label">Email</label>
               <input
                 type="email"
                 class="form-control"
@@ -131,28 +130,28 @@ import { AssignableUserRole, User } from '../../models/inventory.models';
             </div>
 
             <div class="form-group" *ngIf="isCreating">
-              <label class="form-label">PASSWORD</label>
+              <label class="form-label">Password</label>
               <input type="password" class="form-control input-mono" [(ngModel)]="userForm.password" required />
               <small>New accounts created here are approved immediately.</small>
             </div>
 
             <div class="form-group">
-              <label class="form-label">ASSIGNED SECURITY ROLE</label>
+              <label class="form-label">Role</label>
               <select class="form-select" [(ngModel)]="userForm.role" required>
-                <option value="ADMIN">ADMIN — Full operational access</option>
-                <option value="WAREHOUSE_MANAGER">WAREHOUSE_MANAGER — Inventory, Transfers & POs</option>
-                <option value="SALES">SALES — Order Creation & Customer Orders</option>
+                <option value="ADMIN">Admin: full access</option>
+                <option value="WAREHOUSE_MANAGER">Warehouse manager: inventory, transfers and purchase orders</option>
+                <option value="SALES">Sales: customer orders</option>
               </select>
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-outline" (click)="showModal = false">CANCEL</button>
+            <button class="btn btn-outline" (click)="showModal = false">Cancel</button>
             <button
               class="btn btn-primary"
               (click)="saveUser()"
               [disabled]="!userForm.role"
             >
-              {{ isCreating ? 'CREATE APPROVED USER' : 'UPDATE ROLE' }}
+              {{ isCreating ? 'Add user' : 'Save role' }}
             </button>
           </div>
         </div>

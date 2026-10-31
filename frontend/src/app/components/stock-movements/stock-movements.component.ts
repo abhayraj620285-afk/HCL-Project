@@ -16,17 +16,17 @@ import { forkJoin } from 'rxjs';
       <!-- Header -->
       <div class="page-header">
         <div>
-          <div class="technical-label">AUDIT TRAIL & INTER-HUB LOGISTICS</div>
-          <h1 class="page-title">Stock Movements & Inter-Warehouse Transfers</h1>
+          <h1 class="page-title">Stock movements</h1>
+          <p class="page-sub">Every stock change and transfer between warehouses.</p>
         </div>
         <div class="header-actions">
           <button class="btn btn-secondary btn-sm" (click)="loadData()" [disabled]="loading()">
             <i class="ri-refresh-line" [class.ri-spin]="loading()"></i>
-            <span>SYNC</span>
+            <span>Refresh</span>
           </button>
           <button *ngIf="authService.isWarehouseManager()" class="btn btn-primary btn-sm" (click)="openTransferModal()">
             <i class="ri-arrow-left-right-line"></i>
-            <span>RECORD STOCK TRANSFER / MOVEMENT</span>
+            <span>Record movement</span>
           </button>
         </div>
       </div>
@@ -35,18 +35,18 @@ import { forkJoin } from 'rxjs';
       <div class="filter-panel panel">
         <div class="filter-grid">
           <div>
-            <label class="form-label">MOVEMENT TYPE</label>
+            <label class="form-label">Movement type</label>
             <select class="form-select" [(ngModel)]="typeFilter">
-              <option value="ALL">ALL TYPES ({{ movements().length }})</option>
-              <option value="TRANSFER">INTER-WAREHOUSE TRANSFER</option>
-              <option value="IN">INBOUND RESTOCK (IN)</option>
-              <option value="OUT">OUTBOUND REMOVAL (OUT)</option>
+              <option value="ALL">All types ({{ movements().length }})</option>
+              <option value="TRANSFER">Transfer between warehouses</option>
+              <option value="IN">Stock in</option>
+              <option value="OUT">Stock out</option>
             </select>
           </div>
           <div>
-            <label class="form-label">FILTER BY PRODUCT</label>
+            <label class="form-label">Product</label>
             <select class="form-select" [(ngModel)]="productFilter">
-              <option [ngValue]="null">ALL PRODUCTS</option>
+              <option [ngValue]="null">All products</option>
               <option *ngFor="let p of products()" [ngValue]="p.id">
                 [{{ p.sku }}] {{ p.name }}
               </option>
@@ -60,13 +60,13 @@ import { forkJoin } from 'rxjs';
         <table class="data-table">
           <thead>
             <tr>
-              <th>LOG ID</th>
-              <th>TIMESTAMP</th>
-              <th>TYPE</th>
-              <th>PRODUCT / SKU</th>
-              <th>ORIGIN FACILITY</th>
-              <th>DESTINATION FACILITY</th>
-              <th>DELTA UNITS</th>
+              <th>ID</th>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Product</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Change</th>
             </tr>
           </thead>
           <tbody>
@@ -89,7 +89,7 @@ import { forkJoin } from 'rxjs';
                   }"
                 >
                   <span class="badge-dot"></span>
-                  {{ mov.type }}
+                  {{ mov.type === 'IN' ? 'Stock in' : mov.type === 'OUT' ? 'Stock out' : 'Transfer' }}
                 </span>
               </td>
               <td>
@@ -98,12 +98,12 @@ import { forkJoin } from 'rxjs';
               </td>
               <td class="mono">
                 <span *ngIf="mov.fromWarehouse">{{ mov.fromWarehouse.name }}</span>
-                <span *ngIf="!mov.fromWarehouse && mov.fromWarehouseId">Hub #{{ mov.fromWarehouseId }}</span>
+                <span *ngIf="!mov.fromWarehouse && mov.fromWarehouseId">Warehouse #{{ mov.fromWarehouseId }}</span>
                 <span *ngIf="!mov.fromWarehouse && !mov.fromWarehouseId" class="text-muted">—</span>
               </td>
               <td class="mono">
                 <span *ngIf="mov.toWarehouse">{{ mov.toWarehouse.name }}</span>
-                <span *ngIf="!mov.toWarehouse && mov.toWarehouseId">Hub #{{ mov.toWarehouseId }}</span>
+                <span *ngIf="!mov.toWarehouse && mov.toWarehouseId">Warehouse #{{ mov.toWarehouseId }}</span>
                 <span *ngIf="!mov.toWarehouse && !mov.toWarehouseId" class="text-muted">—</span>
               </td>
               <td class="mono font-bold" [style.color]="mov.type === 'IN' ? 'var(--color-success)' : mov.type === 'OUT' ? 'var(--color-danger)' : 'var(--accent-primary)'">
@@ -119,8 +119,7 @@ import { forkJoin } from 'rxjs';
         <div class="modal-dialog">
           <div class="modal-header">
             <div>
-              <div class="technical-label">INVENTORY MOVEMENT DISPATCH</div>
-              <div class="section-title">Record Stock Movement</div>
+              <div class="section-title">Record movement</div>
             </div>
             <button class="btn btn-ghost btn-sm" (click)="showTransferModal = false">
               <i class="ri-close-line"></i>
@@ -128,16 +127,16 @@ import { forkJoin } from 'rxjs';
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label class="form-label">MOVEMENT TYPE</label>
+              <label class="form-label">Movement type</label>
               <select class="form-select" [(ngModel)]="movementForm.type">
-                <option value="TRANSFER">TRANSFER — Inter-Warehouse Transfer</option>
-                <option value="IN">IN — Inbound Stock Receipt</option>
-                <option value="OUT">OUT — Outbound Stock Removal</option>
+                <option value="TRANSFER">Transfer between warehouses</option>
+                <option value="IN">Stock in (received)</option>
+                <option value="OUT">Stock out (removed)</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label class="form-label">PRODUCT TO MOVE</label>
+              <label class="form-label">Product</label>
               <select class="form-select" [(ngModel)]="movementForm.productId" required>
                 <option [ngValue]="null" disabled>Choose product...</option>
                 <option *ngFor="let p of products()" [ngValue]="p.id">
@@ -148,9 +147,9 @@ import { forkJoin } from 'rxjs';
 
             <!-- Source Warehouse (for TRANSFER and OUT) -->
             <div class="form-group" *ngIf="movementForm.type === 'TRANSFER' || movementForm.type === 'OUT'">
-              <label class="form-label">SOURCE WAREHOUSE (FROM)</label>
+              <label class="form-label">From warehouse</label>
               <select class="form-select" [(ngModel)]="movementForm.fromWarehouseId" required>
-                <option [ngValue]="null" disabled>Select source hub...</option>
+                <option [ngValue]="null" disabled>Select a warehouse...</option>
                 <option *ngFor="let w of warehouses()" [ngValue]="w.id">
                   {{ w.name }} ({{ w.location }})
                 </option>
@@ -159,9 +158,9 @@ import { forkJoin } from 'rxjs';
 
             <!-- Destination Warehouse (for TRANSFER and IN) -->
             <div class="form-group" *ngIf="movementForm.type === 'TRANSFER' || movementForm.type === 'IN'">
-              <label class="form-label">DESTINATION WAREHOUSE (TO)</label>
+              <label class="form-label">To warehouse</label>
               <select class="form-select" [(ngModel)]="movementForm.toWarehouseId" required>
-                <option [ngValue]="null" disabled>Select target hub...</option>
+                <option [ngValue]="null" disabled>Select a warehouse...</option>
                 <option *ngFor="let w of warehouses()" [ngValue]="w.id" [disabled]="movementForm.type === 'TRANSFER' && w.id === movementForm.fromWarehouseId">
                   {{ w.name }} ({{ w.location }})
                 </option>
@@ -169,25 +168,25 @@ import { forkJoin } from 'rxjs';
             </div>
 
             <div class="form-group">
-              <label class="form-label">QUANTITY UNITS</label>
+              <label class="form-label">Quantity</label>
               <input
                 type="number"
                 class="form-control input-mono"
                 [(ngModel)]="movementForm.quantity"
                 min="1"
-                placeholder="Units to transfer"
+                placeholder="Units"
                 required
               />
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-outline" (click)="showTransferModal = false">CANCEL</button>
+            <button class="btn btn-outline" (click)="showTransferModal = false">Cancel</button>
             <button
               class="btn btn-primary"
               (click)="submitMovement()"
               [disabled]="!isMovementValid()"
             >
-              EXECUTE MOVEMENT
+              Record movement
             </button>
           </div>
         </div>

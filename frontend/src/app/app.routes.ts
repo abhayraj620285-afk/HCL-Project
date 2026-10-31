@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router, Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
 import { roleGuard } from './guards/role.guard';
 import { approvalGuard } from './guards/approval.guard';
@@ -21,14 +22,15 @@ export const routes: Routes = [
       import('./components/login/login.component').then((m) => m.LoginComponent),
   },
   {
+    // The sign-up form lives inside the login page (sliding panel).
     path: 'register',
-    loadComponent: () =>
-      import('./components/register/register.component').then((m) => m.RegisterComponent),
+    pathMatch: 'full',
+    redirectTo: () => inject(Router).parseUrl('/login?mode=signup'),
   },
   {
     path: 'signup',
-    redirectTo: 'register',
     pathMatch: 'full',
+    redirectTo: () => inject(Router).parseUrl('/login?mode=signup'),
   },
   {
     path: '',

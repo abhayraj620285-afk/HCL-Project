@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   template: `
     <nav class="pagination-bar" *ngIf="total > 0" aria-label="Pagination">
       <div class="pagination-info">
-        Showing <strong>{{ startIndex }}</strong> to <strong>{{ endIndex }}</strong> of <strong>{{ total }}</strong> records
+        Showing <strong>{{ startIndex }}</strong> to <strong>{{ endIndex }}</strong> of <strong>{{ total }}</strong>
       </div>
 
       <div class="pagination-controls" *ngIf="totalPages > 1">
@@ -55,32 +55,14 @@ import { CommonModule } from '@angular/common';
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding: 0.75rem 0;
-      margin-top: 1rem;
-      border-top: 1px solid var(--border-color, #235347);
+      padding: 0.85rem 1rem;
+      border-top: 1px solid var(--border-subtle);
       flex-wrap: wrap;
     }
-
-    .pagination-info {
-      font-size: 0.82rem;
-      color: var(--text-secondary, #8eb69b);
-    }
-
-    .pagination-info strong {
-      color: var(--text-primary, #daf1de);
-    }
-
-    .pagination-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .page-numbers {
-      display: flex;
-      gap: 0.25rem;
-    }
-
+    .pagination-info { font-size: 0.82rem; color: var(--text-muted); }
+    .pagination-info strong { color: var(--text-primary); font-weight: 600; }
+    .pagination-controls { display: flex; align-items: center; gap: 0.4rem; }
+    .page-numbers { display: flex; gap: 0.2rem; }
     .page-btn {
       min-width: 32px;
       height: 32px;
@@ -89,25 +71,17 @@ import { CommonModule } from '@angular/common';
       place-items: center;
       background: transparent;
       border: 1px solid transparent;
-      border-radius: var(--radius-sm, 6px);
-      color: var(--text-secondary, #8eb69b);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
       font-size: 0.82rem;
       font-weight: 500;
+      font-variant-numeric: tabular-nums;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: background-color 140ms ease, color 140ms ease;
     }
-
-    .page-btn:hover:not(.active) {
-      background: var(--bg-card-hover, rgba(35, 83, 71, 0.4));
-      color: var(--text-primary, #daf1de);
-    }
-
-    .page-btn.active {
-      background: var(--accent-forest, #235347);
-      color: var(--text-primary, #daf1de);
-      border-color: var(--border-color, #235347);
-      font-weight: 600;
-    }
+    .page-btn:hover:not(.active) { background: var(--bg-card-hover); color: var(--text-primary); }
+    .page-btn.active { background: var(--bg-card-hover); color: var(--accent-primary); border-color: var(--border-strong); font-weight: 600; }
+    .page-btn:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
   `]
 })
 export class PaginationComponent {

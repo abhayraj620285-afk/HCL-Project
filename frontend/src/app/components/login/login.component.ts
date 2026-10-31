@@ -52,20 +52,10 @@ export class LoginComponent implements OnInit {
 
   switchToSignUp() {
     this.isSignUpActive.set(true);
-    try {
-      window.history.pushState(null, '', '/register');
-    } catch {
-      // fallback for non-browser/SSR test environments
-    }
   }
 
   switchToSignIn() {
     this.isSignUpActive.set(false);
-    try {
-      window.history.pushState(null, '', '/login');
-    } catch {
-      // fallback for non-browser/SSR test environments
-    }
   }
 
   onForgotPassword(event: Event) {
@@ -104,9 +94,8 @@ export class LoginComponent implements OnInit {
             `No account found for "${username}". Please sign up first.`,
             'Account not registered'
           );
-          void this.router.navigate(['/register'], {
-            queryParams: { username }
-          });
+          this.registerData.username = username;
+          this.switchToSignUp();
           return;
         }
 

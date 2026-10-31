@@ -38,93 +38,34 @@ import { CommonModule } from '@angular/common';
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(5, 31, 32, 0.75);
-      backdrop-filter: blur(4px);
+      background: var(--bg-overlay);
       display: grid;
       place-items: center;
       z-index: 1050;
       padding: 1rem;
     }
-
     .modal-card {
-      background: var(--bg-card, #163832);
-      border: 1px solid var(--border-color, #235347);
-      border-radius: var(--radius-lg, 12px);
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
       padding: 1.5rem;
       max-width: 440px;
       width: 100%;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+      box-shadow: var(--shadow-pop);
       animation: modal-enter 0.15s ease-out;
     }
-
-    .modal-header {
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-      margin-bottom: 1.5rem;
-    }
-
-    .modal-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 1.25rem;
-      flex-shrink: 0;
-    }
-
-    .icon-danger {
-      background: rgba(239, 68, 68, 0.15);
-      color: #f87171;
-      border: 1px solid rgba(239, 68, 68, 0.25);
-    }
-
-    .icon-info {
-      background: rgba(56, 189, 248, 0.15);
-      color: #38bdf8;
-      border: 1px solid rgba(56, 189, 248, 0.25);
-    }
-
-    .modal-title {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--text-primary, #daf1de);
-      margin: 0 0 0.35rem 0;
-    }
-
-    .modal-message {
-      font-size: 0.88rem;
-      color: var(--text-secondary, #8eb69b);
-      margin: 0;
-      line-height: 1.5;
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.75rem;
-    }
-
-    .btn-danger {
-      background-color: #ef4444;
-      color: #ffffff;
-      border: 1px solid #dc2626;
-    }
-
-    .btn-danger:hover {
-      background-color: #dc2626;
-    }
-
+    .modal-header { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem; }
+    .modal-icon { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-size: 1.25rem; flex-shrink: 0; }
+    .icon-danger { background: var(--color-danger-bg); color: var(--color-danger); }
+    .icon-info { background: var(--bg-card-hover); color: var(--text-secondary); }
+    .modal-title { font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin: 0 0 0.3rem 0; }
+    .modal-message { font-size: 0.9rem; color: var(--text-secondary); margin: 0; line-height: 1.5; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 0.6rem; }
+    .btn-danger { background-color: var(--color-danger); color: #ffffff; border: 1px solid var(--color-danger); }
+    .btn-danger:hover { background-color: var(--accent-glow); border-color: var(--accent-glow); color: #ffffff; }
     @keyframes modal-enter {
-      from {
-        opacity: 0;
-        transform: scale(0.96);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
     }
   `]
 })

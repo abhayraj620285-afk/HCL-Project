@@ -84,7 +84,7 @@ describe('LoginComponent', () => {
     expect(component.loading()).toBe(false);
   });
 
-  it('should redirect to /register when account is not found (userNotFound = true)', () => {
+  it('should slide to the sign-up form when account is not found (userNotFound = true)', () => {
     component.loginData.username = 'newuser';
     component.loginData.password = 'somepassword';
     mockAuthService.login.mockReturnValue(
@@ -102,9 +102,9 @@ describe('LoginComponent', () => {
       'No account found for "newuser". Please sign up first.',
       'Account not registered'
     );
-    expect(router.navigate).toHaveBeenCalledWith(['/register'], {
-      queryParams: { username: 'newuser' }
-    });
+    expect(component.isSignUpActive()).toBe(true);
+    expect(component.registerData.username).toBe('newuser');
+    expect(router.navigate).not.toHaveBeenCalled();
     expect(component.loading()).toBe(false);
   });
 
@@ -126,6 +126,7 @@ describe('LoginComponent', () => {
       'Invalid password. Please check your credentials and try again.',
       'Sign in failed'
     );
-    expect(router.navigate).not.toHaveBeenCalledWith(['/register'], expect.anything());
+    expect(component.isSignUpActive()).toBe(false);
+    expect(router.navigate).not.toHaveBeenCalled();
   });
 });

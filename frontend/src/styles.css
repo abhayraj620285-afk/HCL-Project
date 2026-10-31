@@ -40,7 +40,7 @@
   --font-heading: 'Geist', system-ui, sans-serif;
   --font-body: 'Geist', system-ui, sans-serif;
   --font-sans: 'Geist', system-ui, sans-serif;
-  --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-mono: 'Geist', system-ui, sans-serif;
 
   --text-primary: #111114;
   --text-secondary: #55555F;
@@ -373,3 +373,12 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; touch-actio
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Utilities used across pages */
+.mono { font-variant-numeric: tabular-nums; }
+.text-muted { color: var(--text-muted); }
+.font-bold { font-weight: 600; }
+.page-sub { margin-top: 0.2rem; color: var(--text-secondary); font-size: 0.9rem; }
+.page-header .page-title { margin: 0; }
+.filter-panel.panel { padding: 1rem 1.15rem; }
+.data-table td.empty-state { text-align: center; padding: 2.5rem 1rem; }
