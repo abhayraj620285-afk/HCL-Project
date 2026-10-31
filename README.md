@@ -604,9 +604,9 @@ sequenceDiagram
 When the backend starts up, `SuperAdminBootstrap` checks if an administrative account exists. If not, it provisions the initial Superadmin using the provided environment variables:
 
 ```bash
-SUPER_ADMIN_USERNAME=admin
-SUPER_ADMIN_EMAIL=admin@rims.internal
-SUPER_ADMIN_PASSWORD=AdminSecurePassword123!
+SUPER_ADMIN_USERNAME=<initial-admin-username>
+SUPER_ADMIN_EMAIL=<initial-admin-email>
+SUPER_ADMIN_PASSWORD=<strong-unique-password>
 ```
 
 Passwords are encrypted using **BCrypt** with 10 salt rounds. Subsequent restarts recognize the existing account and avoid overwriting administrative passwords.
@@ -737,7 +737,8 @@ CREATE DATABASE inventory;
 
 ### 2. Configure Environment Variables
 
-Create a `backend/.env` file or export the following variables in your terminal:
+Create a `backend/.env` file (copy `backend/.env.example`) or export the following variables in your terminal.
+`backend/.env` and `application-local.yaml` are gitignored, so real credentials belong there and nowhere else.
 
 ```bash
 # Database Settings
@@ -746,12 +747,12 @@ DB_USERNAME=postgres
 DB_PASSWORD=your_postgres_password
 
 # Security & Tokens (Base64-encoded, minimum 32 random bytes)
-JWT_SECRET=c2VjdXJlX2VudGVycHJpc2Vfand0X3NlY3JldF9mb3Jfcmltc19zeXN0ZW1fMjAyNg==
+JWT_SECRET=your_base64_encoded_32_byte_jwt_key_here
 
-# Superadmin Initial Bootstrap
-SUPER_ADMIN_USERNAME=admin
-SUPER_ADMIN_EMAIL=admin@rims.internal
-SUPER_ADMIN_PASSWORD=AdminSecurePassword123!
+# Superadmin Initial Bootstrap (first startup only)
+SUPER_ADMIN_USERNAME=
+SUPER_ADMIN_EMAIL=
+SUPER_ADMIN_PASSWORD=
 
 # CORS Allowed Origins
 APP_CORS_ALLOWED_ORIGINS=http://localhost:4200,http://localhost:4201
